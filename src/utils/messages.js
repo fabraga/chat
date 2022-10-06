@@ -12,17 +12,20 @@ const getMeta = (meta) => {
   }
 }
 
-const genMessage = ({ message, meta }) => {
+const genMessage = ({ type, text, user }) => {
   return {
-    text: message,
-    meta: getMeta(meta)
+    type,
+    text,
+    user: getMeta(user)
   }
 }
 
-const genLocation = ({ coords, meta }) => {
+const genLocation = ({ type, text, coords, user }) => {
   const location = {
+    type,
+    text,
     url: `https://google.com/maps/?q=${coords.lat},${coords.lon}`,
-    meta: getMeta(meta)
+    user: getMeta(user)
   }
   return location;
 }

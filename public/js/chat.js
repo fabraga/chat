@@ -52,25 +52,31 @@ const getTimeElement = (createdAt) => {
   return timeElement;
 }
 
-const getMessageSender = (username) => {
-  const senderElement = document.createElement('span');
-  senderElement.className = 'message-sender';
-  senderElement.innerText = username;
-  return senderElement;
+const getMessageType = (type, text) => {
+  const metaContent = document.createElement('span');
+  metaContent.className = `message-${type}`;
+  metaContent.innerText = text;
+  return metaContent;
 }
 
-const getMessageStatusElement = (meta) => {
+const getMessageMeta = (message) => {
   const statusElement = document.createElement('div'); // information about the message
-  statusElement.className = 'message-status';
-  statusElement.insertAdjacentElement('beforeend', getTimeElement(meta.createdAt));
-  statusElement.insertAdjacentElement('beforeend', getMessageSender(meta.username));
-  // TODO: more info to add to the same line later (such as username)
+  statusElement.className = 'message-meta';
+
+  const text = ['welcome', 'system'].includes(message.type) ? message.text : message.user.username;
+
+  statusElement.insertAdjacentElement('beforeend', getTimeElement(message.user.createdAt));
+  statusElement.insertAdjacentElement('beforeend', getMessageType(message.type, text));
   return statusElement;
 }
 
-const getMessageBallon = (text) => {
+const getMessageBallon = (text, received) => {
   const ballon = document.createElement('div');
   ballon.className = 'message-ballon';
+
+  if (received) {
+    ballon.className += ' message-ballon-received';
+  }
 
   const span = document.createElement('span');
   span.innerText = text;
@@ -80,11 +86,17 @@ const getMessageBallon = (text) => {
   return ballon;
 }
 
-const getMessageBox = (msg) => {
-  const box = document.createElement('div');
+const getMessageBox = (message) => {
+  const box = document.createElement('div')
   box.className = 'message-box';
-  box.insertAdjacentElement('beforeend', getMessageStatusElement(msg.meta));
-  box.insertAdjacentElement('beforeend', getMessageBallon(msg.text));
+  
+  box.insertAdjacentElement('beforeend', getMessageMeta(message))
+
+  if (message.type === 'sender') {
+    const receiver = message.user.username !== username.toLocaleLowerCase();
+    box.insertAdjacentElement('beforeend', getMessageBallon(message.text, receiver))
+  }
+
   return box;
 }
 
@@ -96,11 +108,19 @@ const getLocationBox = (loc) => {
   anchor.setAttribute('href', loc.url);
   anchor.setAttribute('target', '_blank');
   anchor.innerText = 'My Location';
-  box.insertAdjacentElement('beforeend', getMessageStatusElement(loc.meta));
+  box.insertAdjacentElement('beforeend', getMessageMeta(loc));
   box.insertAdjacentElement('beforeend', anchor);
   return box;
 }
 
+const getErrorMessage = (message) => {
+  const box = document.createElement('div');
+  const alert = document.createElement('span');
+  alert.className = 'message-error'
+  alert.innerText = message;
+  box.insertAdjacentElement('beforeend', alert);
+  return box;
+}
 
 // Listeners
 socket.on('share', (location) => {
@@ -143,18 +163,12 @@ $form.addEventListener('submit', (e) => { // send message
   
   const message = e.target.elements.message;
   
-  socket.emit('message', {
-      message: message.value,
-      meta: {
-        username,
-        lang: getLang(),
-      }
-    }, (error) => {
+  socket.emit('message', { text: message.value }, (error) => {
     $send.removeAttribute('disabled');
     message.focus();
 
     if (error) {
-      return console.log(error)
+      messages.insertAdjacentElement('beforeend', getErrorMessage(error))
     }
 
     message.value = '';

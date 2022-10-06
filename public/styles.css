@@ -90,8 +90,8 @@ button:disabled {
   height: 100vh;
   color: white;
   background: #333744;
-  width: 225px;
-  overflow-y: scroll
+  width: 200px;
+  overflow-y: auto;
 }
 
 /* Chat styles */
@@ -107,6 +107,7 @@ button:disabled {
   flex-grow: 1;
   padding: 24px 24px 0 24px;
   overflow-y: scroll;
+  background: rgb(240, 240, 230);
 }
 
 
@@ -163,17 +164,21 @@ button:disabled {
 /* Chat Sidebar Styles */
 
 .room-title {
+  text-align: center;
   font-weight: 400;
   font-size: 22px;
-  background: #2c2f3a;
-  padding: 24px;   
+  background: #3f2c4a;
+  padding: 24px;
+  user-select: none;   
 }
 
 .list-title {
+  text-align: center;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 4px;
-  padding: 12px 24px 0 24px;
+  padding: 8px 18px;
+  background-color: rgba(0, 0, 0, .1);
 }
 
 .users {
@@ -189,6 +194,11 @@ form {
   justify-content: center;
   align-items: center;
 } */
+
+.message-meta {
+  margin: 0 5px;
+  /* padding: 0; */
+}
 
 .message-time {
   color: gray;
@@ -207,9 +217,25 @@ form {
   margin-left: 8px;
 }
 
-.message-status {
-  margin: 0 5px;
-  /* padding: 0; */
+.message-system {
+  font-size: .8rem;
+  font-style: italic;
+  margin-left: 6px;
+  color: darkslategray;
+}
+
+.message-welcome {
+  font-size: .8rem;
+  margin-left: 6px;
+  color: slateblue;
+}
+
+.message-error {
+  color: darkred;
+  font-size: .85rem;
+  font-style: italic;
+  /* font-weight: bold; */
+  letter-spacing: .1em;
 }
 
 .message-box {
@@ -218,6 +244,12 @@ form {
 
 .message-ballon {
   border-radius: 8px;
-  background-color: rgba(0, 128, 256, .1);
+  background-color: rgba(0, 128, 255, .1);
+  padding: 6px 8px;
+}
+
+.message-ballon-received {
+  border-radius: 8px;
+  background-color: rgba(0, 255, 128, .1);
   padding: 6px 8px;
 }

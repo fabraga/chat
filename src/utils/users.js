@@ -19,14 +19,14 @@ const addUser = ({ id, username, room, lang }) => {
 
   // validate username
   if (existingUser) {
-    return { error: 'Username is in use!' };
+    return { error: 'Username already in use! Please pick another.' };
   }
 
   // store user
-  const meta = { id, username, room, lang };
-  users.push(meta);
+  const user = { id, username, room, lang };
+  users.push(user);
 
-  return { meta };
+  return { user };
 }
 
 const removeUser = (id) => {

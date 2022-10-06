@@ -16,33 +16,38 @@ const public = path.join(__dirname, '../public');
 
 app.use(express.static(public));
 
-// let count = 0;
-// const messages = [];
 
 io.on('connection', (socket) => {
   console.log('New Websocket connection');
   
-  // socket.emit('message', genMessage('Welcome!'))
-  // socket.broadcast.emit('message', genMessage(`[a user has joined]`))
-
   socket.on('join', (data, cb) => { // data = { username, room, lang }
-    const { error, meta } = addUser({ id: socket.id, ...data })
+    const { error, user } = addUser({ id: socket.id, ...data })
 
     if (error) {
       return cb(error)
     }
 
-    socket.join(meta.room)
+    const welcomeMessage = {
+      type: 'welcome',
+      text: 'Welcome to the chat room!',
+      user
+    }
 
-    const joiner = meta.username;
+    const joinedMessage = {
+      type: 'system',
+      text: `${user.username} has joined`,
+      user
+    }
 
-    socket.emit('message', genMessage({ message: 'Welcome!', meta }))
+    socket.join(user.room)
 
-    socket.broadcast.to(meta.room).emit('message', genMessage({ message: `[${joiner} joined]`, meta: {...meta, username: 'Admin' } }))
+    socket.emit('message', genMessage(welcomeMessage))
 
-    io.to(meta.room).emit('room', {
-      room: meta.room,
-      users: getRoomUsers(meta.room)
+    socket.broadcast.to(user.room).emit('message', genMessage(joinedMessage))
+
+    io.to(user.room).emit('room', {
+      room: user.room,
+      users: getRoomUsers(user.room)
     })
 
     cb()
@@ -50,20 +55,33 @@ io.on('connection', (socket) => {
 
   socket.on('message', (msg, cb) => {
     const filter = new Filter()
-    if (filter.isProfane(msg.message)) {
-      return cb('[Profanity not allowed]')
+    if (filter.isProfane(msg.text)) {
+      return cb('🚨 Profanity  not  allowed ⚠️')
     }
 
     const user = getUser(socket.id)
 
+    const message = {
+      type: 'sender',
+      text: msg.text,
+      user
+    }
+
     // messages.push(m)
-    io.to(user.room).emit('message', genMessage(msg, user))
+    io.to(user.room).emit('message', genMessage(message))
     cb() // ✓
   })
 
   socket.on('sendLocation', (coords, cb) => {
     const user = getUser(socket.id)
-    io.to(user.room).emit('share', genLocation({ coords, meta: user }))
+
+    const location = {
+      type: 'system',
+      coords,
+      text: `${user.username} shared their location`,
+      user
+    }
+    io.to(user.room).emit('share', genLocation(location))
     cb()
   })
 
@@ -71,7 +89,13 @@ io.on('connection', (socket) => {
     const user = removeUser(socket.id)
 
     if (user) {
-      io.to(user.room).emit('message', genMessage({ message: `[${user.username} left]`, meta: {...user, username: 'Admin' } }))
+      const leaveMessage = {
+        type: 'system',
+        text: `${user.username} has left`,
+        user
+      }
+  
+      io.to(user.room).emit('message', genMessage(leaveMessage))
 
       io.to(user.room).emit('room', {
         room: user.room,
