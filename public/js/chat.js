@@ -28,7 +28,7 @@ const autoscroll = () => {
   const scrollHeight = messages.scrollHeight
   const scrollOffset = messages.scrollTop + visibleHeight
 
-  if ((scrollHeight - mHeight) <= Math.ceil(scrollOffset)) {
+  if ((scrollHeight - mHeight) <= Math.round(scrollOffset)) {
     // messages.scrollTop = messages.scrollHeight
     mElemen.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
   }
