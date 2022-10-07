@@ -1,14 +1,14 @@
 const socket = io()
 
-const rooms = []
+let rooms = []
 
 const chatRooms = document.querySelector('.chat-rooms')
 const joinButton = document.querySelector('#join')
 const username = document.querySelector('#username')
 const room = document.querySelector('#room')
 
-const updateButtons = (rooms) => {
-  if (username.value && !rooms || (username.value && rooms && rooms.length)) {
+const updateButtons = () => {
+  if (username.value && rooms.length) {
     chatRooms.style.display = 'block'
   } else {
     chatRooms.style.display = 'none'
@@ -57,7 +57,7 @@ joinButton.addEventListener('click', (e) => {
 
 
 
-renderRooms = (rooms) => {
+renderRooms = () => {
   rooms.forEach(r => {
     const box = document.createElement('div')
     box.className = 'chat-room'
@@ -69,10 +69,11 @@ renderRooms = (rooms) => {
   })
 }
 
-socket.on('rooms', (rooms) => {
+socket.on('rooms', (salas) => {
+  rooms = [...salas];
   chatRooms.replaceChildren();
   if (rooms.length) {
-    this.renderRooms(rooms)
+    this.renderRooms()
   }
 
   updateButtons()
