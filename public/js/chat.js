@@ -1,8 +1,9 @@
-const socket = io();
+const socket = io()
 
 // HTML Elements
-// rooms
-const side = document.querySelector('#sidebar');
+// room
+const side = document.querySelector('#sideinfo');
+const leave = document.querySelector('#leave');
 
 // chat
 const messages = document.querySelector('#messages');
@@ -131,7 +132,7 @@ socket.on('share', (location) => {
 socket.on('message', (message) => {
   messages.insertAdjacentElement('beforeend', getMessageBox(message))
   autoscroll()
-});
+})
 
 socket.on('room', ({ room, users }) => {
   // side
@@ -151,8 +152,12 @@ socket.on('room', ({ room, users }) => {
     const userItem = document.createElement('li')
     userItem.innerText = user.username
     usersList.insertAdjacentElement('beforeend', userItem)
-  })
+  })  
 
+})
+
+leave.addEventListener('click', () => {
+  location.href = '/'
 })
 
 // Senders
@@ -202,8 +207,7 @@ $shareLocation.addEventListener('click', (e) => {
 
 socket.emit('join', { username, room, lang: getLang() }, (error) => {
   if (error) {
-    alert(error);
-    location.href = '/';
+    alert(error)
+    location.href = '/'
   }
-
-});
+})

@@ -11,15 +11,20 @@
   <body>
     <div class="centered-form">
       <div class="message-form-box">
-        <h1>JOIN</h1>
-        <form action="/chat.html">
-          <label for="username">You</label>
-          <input type="text" name="username" placeholder="Your name" required>
-          <label for="room">Room</label>
-          <input type="text" name="room" placeholder="Room name" required>
-          <button>Join</button>
-        </form>
+        <h1>CHAT</h1>
+        <div class="form-rooms">
+          <form>
+            <label for="username">You</label>
+            <input id="username" type="text" name="username" placeholder="Your name" required>
+            <label for="room">Room</label>
+            <input id="room" type="text" name="room" placeholder="Room name" required>
+            <button id="join" type="button" disabled>Join</button>
+          </form>
+          <div class="chat-rooms"></div>
+        </div>
       </div>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/rooms.js"></script>
   </body>
 </html>

@@ -4,7 +4,7 @@ const http = require('http');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
 const { genMessage, genLocation } = require('./utils/messages');
-const { addUser, removeUser, getUser, getRoomUsers } = require('./utils/users');
+const { addUser, removeUser, getUser, getRoomUsers, getRooms } = require('./utils/users');
 
 const app = express();
 const server = http.createServer(app);
@@ -19,6 +19,11 @@ app.use(express.static(public));
 
 io.on('connection', (socket) => {
   console.log('New Websocket connection');
+
+  socket.on('arrival', () => {
+    rooms = getRooms()
+    io.emit('rooms', rooms)
+  })
   
   socket.on('join', (data, cb) => { // data = { username, room, lang }
     const { error, user } = addUser({ id: socket.id, ...data })
@@ -26,6 +31,9 @@ io.on('connection', (socket) => {
     if (error) {
       return cb(error)
     }
+
+    rooms = getRooms()
+    io.emit('rooms', rooms)
 
     const welcomeMessage = {
       type: 'welcome',
@@ -101,6 +109,10 @@ io.on('connection', (socket) => {
         room: user.room,
         users: getRoomUsers(user.room)
       })
+
+      rooms = getRooms()
+      io.emit('rooms', rooms)
+  
     }
   })
 });

@@ -11,17 +11,19 @@
   <body>
     <div class="chat">
       <div id="sidebar" class="chat-side">
-        
+        <div id="sideinfo" class="chat-info"></div>
+        <div id="sidecontrols" class="chat-controls">
+          <button id="leave" class="chat-leave">🡄 <span class="chat-leave-label">Leave</span></button>
+        </div>
       </div>
       <div class="chat-main">
         <div id="messages" class="chat-messages"></div>
-    
         <div class="compose">
           <form id="message-form">
             <input placeholder="Message" name="message" type="text" required autocomplete="off">
             <button type="submit" id="send">send</button>
           </form>
-          <button id="share-location">Share location</button>
+          <button id="share-location" title="Share location"><img src="img/location.png" height="20px" width="20px"></button>
         </div>
       </div>
     </div>
