@@ -5,9 +5,20 @@
 }
 
 :root {
-  --title-bg: #3a2a4a;
-  --compose-bg: #3a2a4a;
-  --messages-bg: #302040;
+  --compose-bg: #282e4b;
+  --messages-bg: #202640;
+  --chat-welcome: #5381c7;
+  --location: #6794d6;
+  --chat-side: #eee;
+  --chat-title: #b6d3ff;
+  --chat-title-bg: #282e4b;
+  --list-title: #ccc;
+  --chat-side-bg: #333744;
+  --button-bg: rgb(64, 64, 152);
+  --button-bg-hover: rgb(88, 88, 176);
+  --button-bg-disabled: rgba(0, 0, 0, .3);
+  --button-leave: #264471;
+  --button-share-hover: #202640;
 }
 
 html {
@@ -41,22 +52,22 @@ label {
 
 button {
   cursor: pointer;
-  padding: 12px;
-  background: rgb(64, 64, 152);
+  padding: 1vmin 2vmin;
+  background: var(--button-bg);
   border: none;
   color: white;
-  font-size: 16px;
+  font-size: 3vmin;
   transition: all .3s ease;
 }
 
 button:hover {
-  background: rgb(76, 76, 164);
+  background: var(--button-bg-hover);
 }
 
 button:disabled {
   cursor: default;
-  color: #99e;
-  background: rgb(76, 76, 128);
+  color: #bbb;
+  background: var(--button-bg-disabled);
 }
 
 ul {
@@ -118,9 +129,9 @@ ul {
   justify-content: space-between;
   height: 100vh;
   max-height: 100vh;
-  color: white;
-  background: #333744;
-  max-width: 35vmin;
+  color: var(--chat-side);
+  background: var(--chat-side-bg);
+  max-width: 30vmin;
   user-select: none;
 }
 
@@ -131,14 +142,9 @@ ul {
   text-align: center;
   font-size: 3.5vmin;
   font-weight: 400;
-  background: var(--title-bg);
+  color: var(--chat-title);
+  background: var(--chat-title-bg);
   padding: 3vmin;
-}
-
-.list-box {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
 }
 
 .list-title {
@@ -146,6 +152,7 @@ ul {
   font-size: 3vmin;
   font-weight: 500;
   padding: 2vmin 0;
+  color: var(--list-title);
   background-color: rgba(0, 0, 0, .1);
 }
 
@@ -168,7 +175,7 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2.5vmin;
+  /* padding: 2.5vmin; */
   height: 15vmin;
   justify-content: center;
   background: rgba(0, 0, 0, .1);
@@ -189,15 +196,16 @@ ul {
   color: #eee;
   font-size: 3vmin;
   text-align: center;
-  background: #3f2c4a;
-  border: solid 2px #3f2c4a;
+  background: var(--button-leave);
+  border: solid 2px var(--button-leave);
   box-shadow: none;
-  transition: all .3s ease;
+  transition: all .5s ease;
 }
 .chat-leave:hover {
   color: #fff;
   font-size: 2.1vmin;
   background: rgba(100, 0, 0, .5);
+  border-color: rgba(100, 0, 0, .5);
 }
 
 /* Chat styles */
@@ -246,13 +254,14 @@ ul {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  padding: 2.5vmin 0 2.5vmin 2.5vmin;
-  height: 12vmin;
+  padding: 0 1.5vmin 0 2.5vmin;
+  height: 10vmin;
   background: var(--compose-bg);
 }
 
 .compose form {
   display: flex;
+  max-height: 5.5vmin;
   width: 100%;
 }
 
@@ -260,21 +269,24 @@ ul {
   font-size: 3.5vmin;
   width: 100%;
   border-radius: 8px;
-  background: rgba(255, 255, 255, .8);
+  background: rgba(255, 255, 255, .7);
 }
 
 #message::placeholder {
-  font-size: 3vmin;
+  font-size: 2.5vmin;
+  font-weight: 500;
 }
 
-.compose button {
+.share-location {
   margin: 1vmin;
   background: inherit;
   padding: .5vmin;
   border-radius: 12px;
+  background: inherit;
 }
-.compose button:hover {
-  background: #443355;
+
+.share-location:hover {
+  background: var(--button-share-hover);
 }
 
 .message-meta {
@@ -287,13 +299,13 @@ ul {
 }
 
 .message-sender {
-  color: #b094de;
+  color: #4c88b9;
   font-size: .9rem;
   margin-left: 1.2vmin;
 }
 
 .message-location {
-  color: darkviolet;
+  color: var(--location);
   font-size: .9rem;
   margin-left: 8px;
 }
@@ -308,7 +320,7 @@ ul {
 .message-welcome {
   font-size: .8rem;
   margin-left: 6px;
-  color: slateblue;
+  color: var(--chat-welcome);
 }
 
 .message-error {
@@ -347,13 +359,13 @@ ul {
 .message-ballon {
   border-radius: 8px;
   color: #eee;
-  background-color: rgba(0, 128, 255, .3);
+  background-color: rgba(0, 128, 200, .3);
   padding: 6px 8px;
 }
 
 .message-ballon-received {
   border-radius: 8px;
   color: #eee;
-  background-color: rgba(0, 196, 255, .3);
+  background-color: rgba(0, 196, 200, .3);
   padding: 6px 8px;
 }

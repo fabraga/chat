@@ -215,6 +215,14 @@ $shareLocation.addEventListener('click', (e) => {
   });
 })
 
+$shareLocation.addEventListener('mouseenter', (e) => {
+  const img = $shareLocation.querySelector('img')
+  img.setAttribute('src', 'img/location_on.png')
+})
+$shareLocation.addEventListener('mouseleave', (e) => {
+  const img = $shareLocation.querySelector('img')
+  img.setAttribute('src', 'img/location.png')
+})
 
 socket.emit('join', { username, room, lang: getLang() }, (error) => {
   if (error) {
