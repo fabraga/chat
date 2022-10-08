@@ -83,6 +83,10 @@ io.on('connection', (socket) => {
   socket.on('sendLocation', (coords, cb) => {
     const user = getUser(socket.id)
 
+    if (!user) {
+      return socket.emit('error', 'User not found')
+    }
+
     const location = {
       type: 'system',
       coords,

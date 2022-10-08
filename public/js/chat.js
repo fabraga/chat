@@ -3,13 +3,13 @@ const socket = io()
 // HTML Elements
 // room
 const side = document.querySelector('#sideinfo');
+const usersList = document.querySelector('#users');
 const leave = document.querySelector('#leave');
 
 // chat
 const messages = document.querySelector('#messages');
 const $form = document.querySelector('#message-form');
 const $input = $form.querySelector('input');
-const $send = $form.querySelector('button');
 const $shareLocation = document.querySelector('#share-location');
 
 // HTML Templates
@@ -115,15 +115,20 @@ const getLocationBox = (loc) => {
 }
 
 const getErrorMessage = (message) => {
-  const box = document.createElement('div');
-  const alert = document.createElement('span');
+  const box = document.createElement('div')
+  const alert = document.createElement('span')
   alert.className = 'message-error'
-  alert.innerText = message;
-  box.insertAdjacentElement('beforeend', alert);
-  return box;
+  alert.innerText = messag
+  box.insertAdjacentElement('beforeend', alert)
+  return box
 }
 
 // Listeners
+socket.on('error', (message) => {
+  messages.insertAdjacentElement('beforeend', getErrorMessage(message))
+  autoscroll()
+})
+
 socket.on('share', (location) => {
   messages.insertAdjacentElement('beforeend', getLocationBox(location))
   autoscroll()
@@ -136,20 +141,25 @@ socket.on('message', (message) => {
 
 socket.on('room', ({ room, users }) => {
   // side
-  const roomTitle = document.createElement('h2')
-  roomTitle.className = 'room-title'
-  roomTitle.innerText = room
-  const listTitle = document.createElement('h3')
-  listTitle.className = 'list-title'
-  listTitle.innerText = 'Users'
-  const usersList = document.createElement('ul')
-  usersList.className = 'users'
-  side.replaceChildren();
-  side.insertAdjacentElement('beforeend', roomTitle)
-  side.insertAdjacentElement('beforeend', listTitle)
-  side.insertAdjacentElement('beforeend', usersList)
+  // const roomTitle = document.createElement('h2')
+  // roomTitle.className = 'room-title'
+  // roomTitle.innerText = room
+
+  // const listTitle = document.createElement('h3')
+  // listTitle.className = 'list-title'
+  // listTitle.innerText = 'Users'
+
+  document.querySelector('.room-title').innerText = room
+
+  // side.replaceChildren();
+  // side.insertAdjacentElement('beforeend', roomTitle)
+  // side.insertAdjacentElement('beforeend', listTitle)
+
+  usersList.replaceChildren()
+
   users.forEach((user) => {
     const userItem = document.createElement('li')
+    userItem.className = 'user-list-item'
     userItem.innerText = user.username
     usersList.insertAdjacentElement('beforeend', userItem)
   })  
@@ -164,16 +174,17 @@ leave.addEventListener('click', () => {
 $form.addEventListener('submit', (e) => { // send message
   e.preventDefault();
 
-  $send.setAttribute('disabled', 'disabled');
   
   const message = e.target.elements.message;
+  message.setAttribute('disabled', 'disabled');
   
   socket.emit('message', { text: message.value }, (error) => {
-    $send.removeAttribute('disabled');
+    message.removeAttribute('disabled');
     message.focus();
 
     if (error) {
       messages.insertAdjacentElement('beforeend', getErrorMessage(error))
+      autoscroll()
     }
 
     message.value = '';
@@ -209,5 +220,7 @@ socket.emit('join', { username, room, lang: getLang() }, (error) => {
   if (error) {
     alert(error)
     location.href = '/'
+  } else {
+    $input.focus()
   }
 })

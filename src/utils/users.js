@@ -43,6 +43,10 @@ const getUser = (id) => {
   return users.find(u => u.id === id)
 }
 
+const getUserFromUsername = (username) => {
+  return users.find(u => u.username === username)
+}
+
 const getRoomUsers = (room) => {
   return users.filter(u => u.room === room)
 }

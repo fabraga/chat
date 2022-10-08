@@ -4,8 +4,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --title-bg: #3a2a4a;
+  --compose-bg: #3a2a4a;
+  --messages-bg: #302040;
+}
+
 html {
-  font-size: 16px;
+  font-size: 3vmin;
 }
 
 body {
@@ -15,9 +21,9 @@ body {
 }
 
 input {
-  font-size: 14px;
-  border: 1px solid #eeeeee;
-  padding: 12px;
+  font-size: 2.5vmin;
+  border: .15vmin solid #eeeeee;
+  padding: 1vmin 2vmin;
   outline: none;
 }
 
@@ -40,7 +46,7 @@ button {
   border: none;
   color: white;
   font-size: 16px;
-  transition: background .3s ease;
+  transition: all .3s ease;
 }
 
 button:hover {
@@ -51,11 +57,24 @@ button:disabled {
   cursor: default;
   color: #99e;
   background: rgb(76, 76, 128);
-  /* background: #7c5cbf94; */
 }
 
+ul {
+  list-style-type: none;
+}
+
+/* form {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+} */
 
 /* Join Page Styles */
+.icon-location {
+  height: 5vmin;
+  width: 5vmin;
+}
 
 .centered-form {
   background: #333744;
@@ -93,51 +112,66 @@ button:disabled {
 /* Chat Sidebar Styles */
 
 .chat-side {
-  flex-grow: 1;
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
+  flex-grow: 1;
+  justify-content: space-between;
   height: 100vh;
   max-height: 100vh;
   color: white;
   background: #333744;
-  max-width: 200px;
+  max-width: 35vmin;
+  user-select: none;
 }
 
 .chat-info {
-  flex-grow: 1;
 }
 
 .room-title {
   text-align: center;
+  font-size: 3.5vmin;
   font-weight: 400;
-  font-size: 22px;
-  background: #3f2c4a;
-  padding: 24px 0;
-  user-select: none;   
+  background: var(--title-bg);
+  padding: 3vmin;
+}
+
+.list-box {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 }
 
 .list-title {
   text-align: center;
+  font-size: 3vmin;
   font-weight: 500;
-  font-size: 16px;
-  margin-bottom: 4px;
-  padding: 8px 0;
+  padding: 2vmin 0;
   background-color: rgba(0, 0, 0, .1);
 }
 
 .users {
-  list-style-type: none;
-  font-weight: 300;
-  padding: 12px 24px 0 24px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  height: 100%;
+
+  padding: 2vmin 2vmin 0 3vmin;
+  
   overflow-y: auto;
+}
+
+.user-list-item {
+  font-size: 2.5vmin;
 }
 
 .chat-controls {
   display: flex;
-  flex-shrink: 0;
   justify-content: center;
-  margin-top: 16px;
-  padding: 24px;
+  align-items: center;
+  padding: 2.5vmin;
+  height: 15vmin;
+  justify-content: center;
+  background: rgba(0, 0, 0, .1);
 }
 
 .chat-control {
@@ -146,25 +180,24 @@ button:disabled {
 }
 
 .chat-leave {
-  font-size: .9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 5vmin;
+  width: 6vmin;
+  color: #eee;
+  font-size: 3vmin;
   text-align: center;
   background: #3f2c4a;
   border: solid 2px #3f2c4a;
-  padding: 6px 12px;
   box-shadow: none;
   transition: all .3s ease;
 }
 .chat-leave:hover {
-  font-size: 1rem;
-  background: #4f3c5a;
-  box-shadow: inset 4px 4px 8px rgba(100, 0, 0, .5), inset -4px -4px 8px rgba(100, 0, 0, .5);
-}
-.chat-leave-label {
-  font-size: .9rem;
-  transition: all .3s ease;
-}
-.chat-leave-label:hover {
-  font-size: 1rem;
+  color: #fff;
+  font-size: 2.1vmin;
+  background: rgba(100, 0, 0, .5);
 }
 
 /* Chat styles */
@@ -174,13 +207,13 @@ button:disabled {
   display: flex;
   flex-direction: column;
   max-height: 100vh;
-  background: #332244;
+  background: var(--messages-bg);
 }
 
 .chat-messages {
   flex-grow: 1;
-  padding: 24px 24px 0 24px;
-  overflow-y: scroll;
+  padding: 2vmin 2vmin 0 2vmin;
+  overflow-y: auto;
 }
 
 
@@ -210,43 +243,42 @@ button:disabled {
 
 .compose {
   display: flex;
-  flex-shrink: 0;
-  margin-top: 16px;
-  padding: 24px;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5vmin 0 2.5vmin 2.5vmin;
+  height: 12vmin;
+  background: var(--compose-bg);
 }
 
 .compose form {
   display: flex;
-  flex-grow: 1;
-  margin-right: 16px;
+  width: 100%;
 }
 
 .compose input {
-  border: 1px solid #eeeeee;
+  font-size: 3.5vmin;
   width: 100%;
-  padding: 12px;
-  margin: 0 16px 0 0;
-  flex-grow: 1;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, .8);
+}
+
+#message::placeholder {
+  font-size: 3vmin;
 }
 
 .compose button {
-  font-size: 14px;
+  margin: 1vmin;
+  background: inherit;
+  padding: .5vmin;
+  border-radius: 12px;
+}
+.compose button:hover {
+  background: #443355;
 }
 
-
-
-
-/* 
-form {
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
-  align-items: center;
-} */
-
 .message-meta {
-  margin: 0 5px;
-  /* padding: 0; */
+  margin: 0 1.2vmin;
 }
 
 .message-time {
@@ -257,7 +289,7 @@ form {
 .message-sender {
   color: #b094de;
   font-size: .9rem;
-  margin-left: 8px;
+  margin-left: 1.2vmin;
 }
 
 .message-location {
