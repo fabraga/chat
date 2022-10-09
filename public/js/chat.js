@@ -26,7 +26,7 @@ const autoscroll = () => {
 
   const visibleHeight = messages.offsetHeight
   const scrollHeight = messages.scrollHeight
-  const scrollOffset = messages.scrollTop + visibleHeight
+  const scrollOffset = messages.scrollTop + visibleHeight + 10
 
   if ((scrollHeight - mHeight) <= Math.round(scrollOffset)) {
     // messages.scrollTop = messages.scrollHeight
@@ -184,8 +184,9 @@ $form.addEventListener('submit', (e) => { // send message
 
     if (error) {
       messages.insertAdjacentElement('beforeend', getErrorMessage(error))
-      autoscroll()
     }
+
+    messages.lastElementChild.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
 
     message.value = '';
     console.log('Message delivered ✓');

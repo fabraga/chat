@@ -26,7 +26,7 @@ html {
 }
 
 body {
-  line-height: 1.4;
+  line-height: 4vmin;
   color: #333333;
   font-family: Helvetica, Arial, sans-serif;
 }
@@ -39,14 +39,15 @@ input {
 }
 
 h1 {
-  margin-bottom: 16px;
+  margin-bottom: 2vmin;
   text-align: center;
+  font-size: 6vmin;
 }
 
 label {
   display: block;
-  font-size: 14px;
-  margin-bottom: 8px;
+  font-size: 2vmin;
+  margin-bottom: .2vmin;
   color: #055;
 }
 
@@ -87,8 +88,8 @@ ul {
   width: 5vmin;
 }
 
-.centered-form {
-  background: #333744;
+.centered {
+  background: #333333;
   width: 100vw;
   height: 100vh;   
   display: flex;
@@ -96,19 +97,28 @@ ul {
   align-items: center;
 }
 
-.message-form-box {
+.form-box {
   box-shadow: 0px 0px 17px 1px #1D1F26;
-  background: rgb(96, 155, 225);
-  padding: 24px;
-  width: 250px;
+  background: rgb(81, 131, 192);
+  padding: 3vmin;
+  width: 40vmin;
 }
 
-.centered-form button {
+.centered button {
+  font-weight: 500;
+  margin-top: 1vmin;
   width: 100%;
 }
 
-.centered-form input {
-  margin-bottom: 16px;
+.centered label {
+  display: block;
+  font-size: 2.5vmin;
+  margin-bottom: .2vmin;
+  color: rgb(25, 75, 96);
+}
+
+.centered input {
+  margin-bottom: 2vmin;
   width: 100%;
 }
 
@@ -149,7 +159,7 @@ ul {
 
 .list-title {
   text-align: center;
-  font-size: 3vmin;
+  font-size: 2.7vmin;
   font-weight: 500;
   padding: 2vmin 0;
   color: var(--list-title);
@@ -186,26 +196,67 @@ ul {
   flex-grow: 1;
 }
 
+
+
+@keyframes animateLeave {
+  from {
+    padding: 1vmin;
+    font-size: 3vmin;
+  }
+
+  25% {
+    font-size: 2.5vmin;
+  }
+
+  40% {
+    padding: 1vmin 1vmin 1vmin 8vmin;
+    font-size: 2vmin;
+  }
+
+  60% {
+    padding: 1vmin 1vmin 1vmin 8vmin;
+    font-size: 2vmin;
+  }
+  
+  80% {
+    padding: 1vmin 8vmin 1vmin 1vmin;
+    font-size: 3.5vmin;
+  }
+
+  to {
+    padding: 1vmin;
+    font-size: 3vmin;
+  }
+}
+
+
 .chat-leave {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  text-align: center;
   height: 5vmin;
   width: 6vmin;
   color: #eee;
   font-size: 3vmin;
-  text-align: center;
+  padding: 1vmin;
+  
   background: var(--button-leave);
-  border: solid 2px var(--button-leave);
-  box-shadow: none;
-  transition: all .5s ease;
+  border: solid .2vmin var(--button-leave);
+  box-shadow: inset 0 0 0 inherit, inset 0 0 0 inherit;
+
+  transition: all .3s ease;
 }
 .chat-leave:hover {
   color: #fff;
-  font-size: 2.1vmin;
   background: rgba(100, 0, 0, .5);
-  border-color: rgba(100, 0, 0, .5);
+  border-color: orangered;
+  box-shadow: inset -.3vmin -.3vmin 1vmin rgba(255, 68, 0, .5), inset .3vmin .3vmin 1vmin rgba(255, 68, 0, .5);
+  width: 12vmin;
+  
+  animation-duration: .6s;
+  animation-name: animateLeave;
+  animation-iteration-count: 1;
+  animation-direction: alternate;
 }
 
 /* Chat styles */
@@ -289,12 +340,16 @@ ul {
   background: var(--button-share-hover);
 }
 
+.message-box {
+  margin: .5vmin .8vmin;
+}
+
 .message-meta {
-  margin: 0 1.2vmin;
+  margin: 0 1vmin;
 }
 
 .message-time {
-  color: gray;
+  color: rgb(92, 92, 92);
   font-size: .8rem;
 }
 
@@ -329,10 +384,6 @@ ul {
   font-style: italic;
   /* font-weight: bold; */
   letter-spacing: .1em;
-}
-
-.message-box {
-  margin: 4px 2px;
 }
 
 

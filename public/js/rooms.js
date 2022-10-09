@@ -88,3 +88,4 @@ socket.emit('arrival', {}, (error) => {
 
 })
 
+username.focus()
