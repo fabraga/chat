@@ -116,9 +116,9 @@ const getLocationBox = (loc) => {
 
 const getErrorMessage = (message) => {
   const box = document.createElement('div')
+  box.className = 'message-error'
   const alert = document.createElement('span')
-  alert.className = 'message-error'
-  alert.innerText = messag
+  alert.innerText = message
   box.insertAdjacentElement('beforeend', alert)
   return box
 }
@@ -173,7 +173,6 @@ leave.addEventListener('click', () => {
 // Senders
 $form.addEventListener('submit', (e) => { // send message
   e.preventDefault();
-
   
   const message = e.target.elements.message;
   message.setAttribute('disabled', 'disabled');
@@ -183,7 +182,11 @@ $form.addEventListener('submit', (e) => { // send message
     message.focus();
 
     if (error) {
-      messages.insertAdjacentElement('beforeend', getErrorMessage(error))
+      if (error.expired) {
+        location.href = '/'
+      } else {
+        messages.insertAdjacentElement('beforeend', getErrorMessage(error))
+      }
     }
 
     messages.lastElementChild.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })

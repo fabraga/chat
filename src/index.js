@@ -62,21 +62,32 @@ io.on('connection', (socket) => {
   })
 
   socket.on('message', (msg, cb) => {
-    const filter = new Filter()
-    if (filter.isProfane(msg.text)) {
-      return cb('🚨 Profanity  not  allowed ⚠️')
+    const filter = new Filter({ replaceRegex:  /[A-Za-z0-9가-힣_]/g })
+    const cleaned = filter.clean(msg.text);
+    
+    if (!socket.id) {
+      console.log('socket.id: ', socket.id)
     }
 
     const user = getUser(socket.id)
+    
+    if (!user) {
+      return cb({ expired: true });
+    }
 
     const message = {
       type: 'sender',
-      text: msg.text,
+      text: cleaned,
       user
     }
 
     // messages.push(m)
     io.to(user.room).emit('message', genMessage(message))
+
+    if (filter.isProfane(msg.text)) {
+      return cb('🚨 Profanity  censored 🚨') // ⚠️
+    }
+
     cb() // ✓
   })
 

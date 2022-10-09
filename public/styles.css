@@ -19,6 +19,7 @@
   --button-bg-disabled: rgba(0, 0, 0, .3);
   --button-leave: #264471;
   --button-share-hover: #202640;
+  --error-message: #fa80728a;
 }
 
 html {
@@ -161,7 +162,7 @@ ul {
   text-align: center;
   font-size: 2.7vmin;
   font-weight: 500;
-  padding: 2vmin 0;
+  padding: 2vmin 0 1.5vmin 0;
   color: var(--list-title);
   background-color: rgba(0, 0, 0, .1);
 }
@@ -379,8 +380,9 @@ ul {
 }
 
 .message-error {
-  color: darkred;
-  font-size: .85rem;
+  margin: 0 .8vmin .5vmin .8vmin;
+  color: var(--error-message);
+  font-size: 2.2vmin;
   font-style: italic;
   /* font-weight: bold; */
   letter-spacing: .1em;
