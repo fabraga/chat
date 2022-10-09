@@ -84,12 +84,21 @@ ul {
 } */
 
 /* Join Page Styles */
-.icon-location {
+
+.send {
+  margin: 1vmin;
+  background: inherit;
+  padding: .5vmin;
+  border-radius: 12px;
+  background: inherit;
+}
+
+.send-icon {
   height: 5vmin;
   width: 5vmin;
 }
 
-.centered {
+.entrance {
   background: #333333;
   width: 100vw;
   height: 100vh;   
@@ -98,27 +107,31 @@ ul {
   align-items: center;
 }
 
-.form-box {
-  box-shadow: 0px 0px 17px 1px #1D1F26;
-  background: rgb(81, 131, 192);
-  padding: 3vmin;
-  width: 40vmin;
+#entrance-title {
+  margin: 2vmin 0;
 }
 
-.centered button {
+.entrance-form {
+  box-shadow: 0 0 5vmin .5vmin rgba(0, 0, 0, .5);
+  background: rgb(81, 131, 192);
+  padding: 3vmin;
+  width: 50vmin;
+}
+
+.entrance button {
   font-weight: 500;
   margin-top: 1vmin;
   width: 100%;
 }
 
-.centered label {
+.entrance label {
   display: block;
   font-size: 2.5vmin;
   margin-bottom: .2vmin;
   color: rgb(25, 75, 96);
 }
 
-.centered input {
+.entrance input {
   margin-bottom: 2vmin;
   width: 100%;
 }
@@ -279,19 +292,21 @@ ul {
 
 /* Message Styles */
 
-.message {
-  margin-bottom: 16px;   
+.message-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.message-name {
-  font-weight: 600;
-  font-size: 14px;
-  margin-right: 8px;
+#message-send {
+  margin: 0 0 0 1vmin;
+  padding: .5vmin;
+  height: 5.5vmin;
+  width: 5.5vmin;
 }
 
 .message-meta {
   color: #777;
-  font-size: 14px;
 }
 
 .message a {
@@ -329,15 +344,8 @@ ul {
   font-weight: 500;
 }
 
-.share-location {
-  margin: 1vmin;
-  background: inherit;
-  padding: .5vmin;
-  border-radius: 12px;
-  background: inherit;
-}
 
-.share-location:hover {
+.location-share:hover {
   background: var(--button-share-hover);
 }
 

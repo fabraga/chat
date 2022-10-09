@@ -11,6 +11,7 @@ const messages = document.querySelector('#messages');
 const $form = document.querySelector('#message-form');
 const $input = $form.querySelector('input');
 const $shareLocation = document.querySelector('#share-location');
+const sendButton = document.querySelector('#message-send')
 
 // HTML Templates
 
@@ -192,7 +193,7 @@ $form.addEventListener('submit', (e) => { // send message
     messages.lastElementChild.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
 
     message.value = '';
-    console.log('Message delivered ✓');
+    sendButton.style.display = 'none';
   });
 
 });
@@ -213,19 +214,29 @@ $shareLocation.addEventListener('click', (e) => {
       lon: position.coords.longitude,
     }, () => {
       $shareLocation.removeAttribute('disabled');
-      console.log('Location shared ✓');
     })
 
   });
 })
 
 $shareLocation.addEventListener('mouseenter', (e) => {
-  const img = $shareLocation.querySelector('img')
-  img.setAttribute('src', 'img/location_on.png')
+  $shareLocation.querySelector('img').setAttribute('src', 'img/location_on.png')
 })
 $shareLocation.addEventListener('mouseleave', (e) => {
-  const img = $shareLocation.querySelector('img')
-  img.setAttribute('src', 'img/location.png')
+  $shareLocation.querySelector('img').setAttribute('src', 'img/location.png')
+})
+
+sendButton.addEventListener('mouseenter', (e) => {
+  sendButton.querySelector('img').setAttribute('src', 'img/send1.png');
+})
+sendButton.addEventListener('mouseleave', (e) => {
+  sendButton.querySelector('img').setAttribute('src', 'img/send.png');
+})
+
+$input.addEventListener('input', (e) => {
+  const message = e.target;
+
+  message.parentNode.querySelector('#message-send').style.display = message.value.trim().length ? 'block' : 'none';
 })
 
 socket.emit('join', { username, room, lang: getLang() }, (error) => {
