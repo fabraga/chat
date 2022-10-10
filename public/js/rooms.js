@@ -59,11 +59,11 @@ joinButton.addEventListener('click', (e) => {
 
 renderRooms = () => {
   rooms.forEach(r => {
-    const box = document.createElement('div')
+    const box = document.createElement('li')
     box.className = 'chat-room'
     const room = document.createElement('span')
     room.className = 'room-name'
-    room.innerText = r
+    room.innerText = `${r.room} (${r.users})`
     box.insertAdjacentElement('beforeend', room)
     chatRooms.insertAdjacentElement('beforeend', box)
   })

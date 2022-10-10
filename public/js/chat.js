@@ -179,9 +179,6 @@ $form.addEventListener('submit', (e) => { // send message
   message.setAttribute('disabled', 'disabled');
   
   socket.emit('message', { text: message.value }, (error) => {
-    message.removeAttribute('disabled');
-    message.focus();
-
     if (error) {
       if (error.expired) {
         location.href = '/'
@@ -192,8 +189,11 @@ $form.addEventListener('submit', (e) => { // send message
 
     messages.lastElementChild.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
 
-    message.value = '';
     sendButton.style.display = 'none';
+
+    message.value = '';
+    message.removeAttribute('disabled');
+    message.focus();
   });
 
 });

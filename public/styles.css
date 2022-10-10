@@ -112,11 +112,15 @@ ul {
 }
 
 .entrance-form {
+  display: flex;
+  flex-flow: column nowrap;
   box-shadow: 0 0 5vmin .5vmin rgba(0, 0, 0, .5);
   background: rgb(81, 131, 192);
   padding: 3vmin;
   width: 50vmin;
+  max-height: 90%;
 }
+
 
 .entrance button {
   font-weight: 500;
@@ -396,12 +400,17 @@ ul {
   letter-spacing: .1em;
 }
 
-
+.form-rooms {
+  display: flex;
+  flex-flow: column nowrap;
+  overflow: hidden;
+}
 .chat-rooms {
   display: none;
   background: #444444;
   padding: 2px;
   overflow-y: auto;
+  min-height: 90px;
 }
 .chat-room {
   display: flex;

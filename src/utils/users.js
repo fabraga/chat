@@ -52,7 +52,10 @@ const getRoomUsers = (room) => {
 }
 
 const getRooms = () => {
-  return [...new Set(users.map(u => u.room))]
+  const unique = [...new Set(users.map(u => u.room))]
+  const rooms = []
+  unique.forEach(r => rooms.push({ room: r, users: users.filter(u => u.room === r).length}))
+  return rooms
 }
 
 module.exports = {

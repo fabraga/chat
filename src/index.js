@@ -18,7 +18,7 @@ app.use(express.static(public));
 
 
 io.on('connection', (socket) => {
-  console.log('New Websocket connection');
+  // console.log('New Websocket connection');
 
   socket.on('arrival', () => {
     rooms = getRooms()
