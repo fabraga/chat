@@ -7,18 +7,25 @@ const joinButton = document.querySelector('#join')
 const username = document.querySelector('#username')
 const room = document.querySelector('#room')
 
-const updateButtons = () => {
-  if (username.value && rooms.length) {
-    chatRooms.style.display = 'block'
-  } else {
-    chatRooms.style.display = 'none'
-  }
 
+const updateJoin = () => {
   if (username.value && room.value) {
     joinButton.removeAttribute('disabled')
   } else {
     joinButton.setAttribute('disabled', 'disabled')
   }
+}
+
+const updateButtons = () => {
+  if (username.value && rooms.length) {
+    // chatRooms.style.display = 'block'
+    chatRooms.removeAttribute('disabled')
+  } else {
+    // chatRooms.style.display = 'none'
+    chatRooms.setAttribute('disabled', 'disabled')
+  }
+
+  updateJoin()
 }
 
 username.addEventListener('input', (e) => {
@@ -43,10 +50,26 @@ room.addEventListener('input', (e) => {
 
 })
 
+const getRoomName = (text) => {
+  room.value = text.substring(0, 1).toUpperCase() + text.substring(1, text.indexOf('(')).trim() 
+}
+
+chatRooms.addEventListener('mouseover', (e) => {
+  if (!chatRooms.getAttribute('disabled')) {
+    if (e.target.innerText) {
+      getRoomName(e.target.innerText)
+      updateJoin()
+    }
+  }
+})
+
 chatRooms.addEventListener('click', (e) => {
-  const room = e.target.innerText
+  if (chatRooms.hasAttribute('disabled')) {
+    return;
+  }
   const username = document.querySelector('#username').value
-  location.href = `/chat.html?username=${username}&room=${room}`
+  getRoomName(e.target.innerText)
+  location.href = `/chat.html?username=${username}&room=${room.value}`
 });
 
 joinButton.addEventListener('click', (e) => {
@@ -59,25 +82,25 @@ joinButton.addEventListener('click', (e) => {
 
 renderRooms = () => {
   rooms.forEach(r => {
-    const box = document.createElement('li')
-    box.className = 'chat-room'
-    const room = document.createElement('span')
-    room.className = 'room-name'
+    const room = document.createElement('li')
+    room.className = 'chat-room'
     room.innerText = `${r.room} (${r.users})`
-    box.insertAdjacentElement('beforeend', room)
-    chatRooms.insertAdjacentElement('beforeend', box)
+    chatRooms.insertAdjacentElement('beforeend', room)
   })
 }
 
 socket.on('rooms', (salas) => {
   rooms = [...salas];
+  
+  chatRooms.style.padding = rooms.length ? '.4vmin' : 0
+
   chatRooms.replaceChildren();
+
+  updateButtons()
+
   if (rooms.length) {
     this.renderRooms()
   }
-
-  updateButtons()
-  
 })
 
 socket.emit('arrival', {}, (error) => {

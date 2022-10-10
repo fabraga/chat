@@ -14,9 +14,10 @@
   --chat-title-bg: #282e4b;
   --list-title: #ccc;
   --chat-side-bg: #333744;
-  --button-bg: rgb(64, 64, 152);
-  --button-bg-hover: rgb(88, 88, 176);
+  --button-bg: rgb(64, 96, 128);
+  --button-bg-hover: rgb(52, 84, 140);
   --button-bg-disabled: rgba(0, 0, 0, .3);
+  --button-bg-rooms: rgba(0, 0, 0, .5);
   --button-leave: #264471;
   --button-share-hover: #202640;
   --error-message: #fa80728a;
@@ -396,7 +397,6 @@ ul {
   color: var(--error-message);
   font-size: 2.2vmin;
   font-style: italic;
-  /* font-weight: bold; */
   letter-spacing: .1em;
 }
 
@@ -406,24 +406,29 @@ ul {
   overflow: hidden;
 }
 .chat-rooms {
-  display: none;
-  background: #444444;
-  padding: 2px;
+  background: var(--button-bg-rooms);
   overflow-y: auto;
-  min-height: 90px;
+  user-select: none;
+}
+.chat-rooms[disabled] {
+  background: var(--button-bg-disabled);
+}
+.chat-rooms[disabled] .chat-room {
+  cursor: default !important;
+  color: lightgray !important;
+  background: transparent !important;
 }
 .chat-room {
   display: flex;
   justify-content: center;
+  padding: .5vmin;
   color:rgb(55, 155, 255);
+  transition: all .3s ease;
 }
 .chat-room:hover {
   cursor: pointer;
   color: #fff;
   background: rgb(0, 100, 200);
-}
-.room-name {
-  padding: 4px;
 }
 
 .message-ballon {
