@@ -69,14 +69,12 @@ io.on('connection', (socket) => {
     }
     socket.emit('message', genMessage(welcomeMessage))
 
-    if (!id) {
-      const joinedMessage = {
-        type: 'system',
-        text: `${user.username} has joined`,
-        user
-      }
-      socket.broadcast.to(user.room).emit('message', genMessage(joinedMessage))
+    const joinedMessage = {
+      type: 'system',
+      text: `${user.username} has joined`,
+      user
     }
+    socket.broadcast.to(user.room).emit('message', genMessage(joinedMessage))
     
     io.to(user.room).emit('room', {
       room: user.room,
