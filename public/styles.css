@@ -15,7 +15,7 @@
   --list-title: #ccc;
   --chat-side-bg: #333744;
   --button-bg: rgb(64, 96, 128);
-  --button-bg-hover: rgb(52, 84, 140);
+  --button-bg-hover: black;
   --button-bg-disabled: rgba(0, 0, 0, .3);
   --button-bg-rooms: rgba(0, 0, 0, .5);
   --button-leave: #264471;
@@ -365,6 +365,7 @@ ul {
 .message-time {
   color: rgb(92, 92, 92);
   font-size: .8rem;
+  user-select: none;
 }
 
 .message-sender {
@@ -384,12 +385,14 @@ ul {
   font-style: italic;
   margin-left: 6px;
   color: lightslategray;
+  user-select: none;
 }
 
 .message-welcome {
   font-size: .8rem;
   margin-left: 6px;
   color: var(--chat-welcome);
+  user-select: none;
 }
 
 .message-error {

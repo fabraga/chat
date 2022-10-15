@@ -2,7 +2,10 @@ const users = [];
 
 // addUser, removeUser, getUser, getUsersInRoom
 
-const addUser = ({ id, username, room, lang }) => {
+// export class Users {
+
+// }
+export const addUser = ({ id, username, room, lang }) => {
   // clean the data
   username = (username || '').trim().toLowerCase()
   room = (room || '').trim().toLowerCase()
@@ -32,36 +35,37 @@ const addUser = ({ id, username, room, lang }) => {
   return { user }
 }
 
-const removeUser = (id) => {
+export const removeUser = (id) => {
   const index = users.findIndex(u => u.id === id) // findIndex is faster than find cuz stops searching when found
   if (index !== -1) {
     return users.splice(index, 1)[0]
   }
 }
 
-const getUser = (id) => {
-  return users.find(u => u.id === id)
+export const getUser = (id) => {
+  const user = users.find(u => u.id === id)
+  return user ? { user } : { error: 'User not found' }
 }
 
-const getUserFromUsername = (username) => {
+export const getUserFromUsername = (username) => {
   return users.find(u => u.username === username)
 }
 
-const getRoomUsers = (room) => {
+export const getRoomUsers = (room) => {
   return users.filter(u => u.room === room)
 }
 
-const getRooms = () => {
+export const getRooms = () => {
   const unique = [...new Set(users.map(u => u.room))]
   const rooms = []
   unique.forEach(r => rooms.push({ room: r, users: users.filter(u => u.room === r).length}))
   return rooms
 }
 
-module.exports = {
-  addUser,
-  removeUser,
-  getUser,
-  getRoomUsers,
-  getRooms
-}
+// export default {
+//   addUser,
+//   removeUser,
+//   getUser,
+//   getRoomUsers,
+//   getRooms
+// }

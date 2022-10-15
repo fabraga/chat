@@ -20,6 +20,10 @@ const sendButton = document.querySelector('#message-send')
 const { username, room } = Object.fromEntries(new URLSearchParams(location.search));
 
 const autoscroll = () => {
+  messages.lastElementChild.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
+
+  return
+  
   const mElemen = messages.lastElementChild
   const mStyles = getComputedStyle(mElemen)
   const mMargin = parseInt(mStyles.marginTop) + parseInt(mStyles.marginBottom)
@@ -141,20 +145,7 @@ socket.on('message', (message) => {
 })
 
 socket.on('room', ({ room, users }) => {
-  // side
-  // const roomTitle = document.createElement('h2')
-  // roomTitle.className = 'room-title'
-  // roomTitle.innerText = room
-
-  // const listTitle = document.createElement('h3')
-  // listTitle.className = 'list-title'
-  // listTitle.innerText = 'Users'
-
   document.querySelector('.room-title').innerText = room
-
-  // side.replaceChildren();
-  // side.insertAdjacentElement('beforeend', roomTitle)
-  // side.insertAdjacentElement('beforeend', listTitle)
 
   usersList.replaceChildren()
 
@@ -164,7 +155,6 @@ socket.on('room', ({ room, users }) => {
     userItem.innerText = user.username
     usersList.insertAdjacentElement('beforeend', userItem)
   })  
-
 })
 
 leave.addEventListener('click', () => {

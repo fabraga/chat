@@ -3,24 +3,25 @@ const getLocaleTime = (language) => {
   return new Date().toLocaleTimeString(lang, { hour12: false });
 }
 
-const getMeta = (meta) => {
-  const username = meta && meta.username ? meta.username : 'User';
-  const language = meta && meta.lang ? meta.lang : 'en'
+const getMeta = (user) => {
+  const username = user && user.username ? user.username : 'User';
+  const language = user && user.lang ? user.lang : 'en'
   return {
     createdAt: getLocaleTime(language),
     username
   }
 }
 
-const genMessage = ({ type, text, user }) => {
+
+export const genMessage = ({ type, text, user }) => {
   return {
     type,
     text,
     user: getMeta(user)
   }
 }
-
-const genLocation = ({ type, text, coords, user }) => {
+  
+export const genLocation = ({ type, text, coords, user }) => {
   const location = {
     type,
     text,
@@ -29,8 +30,8 @@ const genLocation = ({ type, text, coords, user }) => {
   }
   return location;
 }
-
-module.exports = {
-  genMessage,
-  genLocation
-}
+  
+// export default {
+//   genMessage,
+//   genLocation
+// }
